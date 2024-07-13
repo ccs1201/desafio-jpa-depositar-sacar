@@ -34,20 +34,20 @@ public class SaqueConcorrenciaTest {
     @Test
     void testeSacarPessimistaConcorrenteSucesso() {
         usuario = repository.save(usuario);
-        assertDoesNotThrow(() -> RunnableFutureTestHelper.run(10, 15, () -> saqueComponent.sacarPessimista(usuario, BigDecimal.valueOf(10.00))));
+        assertDoesNotThrow(() -> RunnableFutureTestHelper.run(50, 1, () -> saqueComponent.sacarPessimista(usuario, BigDecimal.valueOf(10.00))));
 
         usuario = repository.findById(usuario.getId()).get();
 
-        assertEquals(BigDecimal.valueOf(900.00).setScale(2), usuario.getSaldo().setScale(2));
+        assertEquals(BigDecimal.valueOf(500.00).setScale(2), usuario.getSaldo().setScale(2));
     }
 
     @Test
     void testeSacarOtimistaConcorrenteSucesso() {
         usuario = repository.save(usuario);
-        assertDoesNotThrow(() -> RunnableFutureTestHelper.run(10, 15, () -> saqueComponent.sacarOtimista(usuario, BigDecimal.valueOf(10.00))));
+        assertDoesNotThrow(() -> RunnableFutureTestHelper.run(50, 1, () -> saqueComponent.sacarOtimista(usuario, BigDecimal.valueOf(10.00))));
 
         usuario = repository.findById(usuario.getId()).get();
 
-        assertEquals(BigDecimal.valueOf(900.00).setScale(2), usuario.getSaldo().setScale(2));
+        assertEquals(BigDecimal.valueOf(500).setScale(2), usuario.getSaldo().setScale(2));
     }
 }
