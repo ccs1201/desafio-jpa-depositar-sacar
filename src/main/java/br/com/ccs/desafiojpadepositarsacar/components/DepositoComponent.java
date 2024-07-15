@@ -51,7 +51,7 @@ public class DepositoComponent {
             log.debug("Deposito efetuado com sucesso.");
         } catch (ObjectOptimisticLockingFailureException e) {
             log.error(e.getMessage());
-            throw new DepositoException(TranslationUtil.getMessage(MessageConstants.ERRO_AO_DEPOSITAR));
+            throw new DepositoException(TranslationUtil.getMessage(MessageConstants.ERRO_AO_DEPOSITAR), e);
         }
     }
 }
