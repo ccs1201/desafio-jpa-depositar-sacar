@@ -1,9 +1,9 @@
 package br.com.ccs.desafiojpadepositarsacar.services;
 
 import br.com.ccs.desafiojpadepositarsacar.constants.MessageConstants;
-import br.com.ccs.desafiojpadepositarsacar.entities.Usuario;
+import br.com.ccs.desafiojpadepositarsacar.entities.UsuarioVersion;
 import br.com.ccs.desafiojpadepositarsacar.exceptions.ServiceException;
-import br.com.ccs.desafiojpadepositarsacar.repostitories.UsuarioRepository;
+import br.com.ccs.desafiojpadepositarsacar.repostitories.UsuarioVersionRepository;
 import br.com.ccs.desafiojpadepositarsacar.utils.TranslationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,14 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UsuarioService {
+public class UsuarioVersionService {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioVersionRepository usuarioVersionRepository;
 
     @Transactional
-    public Usuario save(Usuario usuario) {
+    public UsuarioVersion save(UsuarioVersion usuario) {
         try {
-            return usuarioRepository.save(usuario);
+            return usuarioVersionRepository.saveAndFlush(usuario);
         } catch (DataIntegrityViolationException e) {
             log.error("Erro ao salvar usuário.", e);
             throw new ServiceException(
@@ -30,15 +30,8 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public Usuario findById(Integer id) {
-        return usuarioRepository.findById(id).orElseThrow(
-                () -> new ServiceException(
-                        TranslationUtil.getMessage(MessageConstants.ERRO_USUARIO_NAO_ENCONTRADO)));
-    }
-
-    @Transactional
-    public Usuario findByIdLockPessimista(Integer id) {
-        return usuarioRepository.findByIdLockPessimista(id).orElseThrow(
+    public UsuarioVersion findById(Integer id) {
+        return usuarioVersionRepository.findById(id).orElseThrow(
                 () -> new ServiceException(
                         TranslationUtil.getMessage(MessageConstants.ERRO_USUARIO_NAO_ENCONTRADO)));
     }

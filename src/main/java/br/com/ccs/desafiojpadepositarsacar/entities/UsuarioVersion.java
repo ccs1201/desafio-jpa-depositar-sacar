@@ -16,10 +16,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class UsuarioComVersion {
+public class UsuarioVersion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, updatable = false)
     @EqualsAndHashCode.Include
     private Integer id;
 
@@ -33,5 +34,6 @@ public class UsuarioComVersion {
     private BigDecimal saldo;
 
     @Version
+    @Setter(AccessLevel.NONE)
     private Short version;
 }

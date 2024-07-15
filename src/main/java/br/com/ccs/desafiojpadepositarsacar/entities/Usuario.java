@@ -20,6 +20,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, updatable = false)
     @EqualsAndHashCode.Include
     private Integer id;
 

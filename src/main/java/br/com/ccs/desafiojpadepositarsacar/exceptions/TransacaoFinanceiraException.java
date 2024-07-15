@@ -1,6 +1,6 @@
 package br.com.ccs.desafiojpadepositarsacar.exceptions;
 
-public class TransacaoFinanceiraException extends DesafioJpaException {
+public class TransacaoFinanceiraException extends DesafioJpaBaseException {
     public TransacaoFinanceiraException(String message) {
         super(message);
     }
