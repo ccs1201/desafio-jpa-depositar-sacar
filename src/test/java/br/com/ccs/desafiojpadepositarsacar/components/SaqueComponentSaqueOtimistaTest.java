@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,7 +18,7 @@ import java.math.RoundingMode;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 class SaqueComponentSaqueOtimistaTest {
 
     @Autowired
@@ -90,8 +89,6 @@ class SaqueComponentSaqueOtimistaTest {
         usuario = usuarioVersionService.save(usuario);
         assertDoesNotThrow(() -> saqueComponent.sacarOtimista(usuario, BigDecimal.valueOf(500)));
         assertDoesNotThrow(() -> saqueComponent.sacarOtimista(usuario, BigDecimal.valueOf(500.00)));
-
-        usuario = usuarioVersionService.findById(usuario.getId());
 
         assertEquals(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP), usuarioVersionService.findById(usuario.getId()).getSaldo());
     }

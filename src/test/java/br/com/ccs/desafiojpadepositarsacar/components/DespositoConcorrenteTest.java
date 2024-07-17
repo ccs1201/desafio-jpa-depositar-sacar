@@ -53,8 +53,6 @@ class DespositoConcorrenteTest {
         assertDoesNotThrow(() -> RunnableFutureTestHelper.run(50, 5, () ->
                 depositoComponent.depositarPessimista(usuario, BigDecimal.valueOf(10.00))));
 
-        usuario = usuarioService.findById(usuario.getId());
-
         assertEquals(BigDecimal.valueOf(1500.00).setScale(2, RoundingMode.HALF_UP), usuarioService.findById(usuario.getId()).getSaldo());
     }
 

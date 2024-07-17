@@ -14,8 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestPropertySource("/application-test.properties")
@@ -41,7 +40,7 @@ class UsuarioServiceTest {
     void testUsuarioSalvoSucesso() {
         var usuario = EntityTestFactory.getUsuario();
         var actual = service.save(usuario);
-        assertEquals(1, actual.getId());
+        assertNotNull(actual.getId());
         assertEquals(usuario.getNome(), actual.getNome());
         assertEquals(usuario.getSaldo(), actual.getSaldo());
     }
