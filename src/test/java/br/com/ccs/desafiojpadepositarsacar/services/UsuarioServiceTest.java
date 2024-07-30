@@ -6,13 +6,15 @@ import br.com.ccs.desafiojpadepositarsacar.exceptions.ServiceException;
 import br.com.ccs.desafiojpadepositarsacar.factories.EntityTestFactory;
 import br.com.ccs.desafiojpadepositarsacar.repostitories.UsuarioRepository;
 import br.com.ccs.desafiojpadepositarsacar.utils.TestContainerBase;
-import br.com.ccs.desafiojpadepositarsacar.utils.TranslationUtil;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
+import static br.com.ccs.desafiojpadepositarsacar.utils.TranslationUtil.getFormattedMessage;
+import static br.com.ccs.desafiojpadepositarsacar.utils.TranslationUtil.getMessage;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UsuarioServiceTest extends TestContainerBase {
@@ -30,7 +32,7 @@ class UsuarioServiceTest extends TestContainerBase {
     @Test
     void testUsuarioNaoEncontrado() {
         var exception = assertThrows(ServiceException.class, () -> service.findById(1));
-        assertEquals(TranslationUtil.getMessage(MessageConstants.ERRO_USUARIO_NAO_ENCONTRADO), exception.getMessage());
+        assertEquals(getMessage(MessageConstants.ERRO_USUARIO_NAO_ENCONTRADO), exception.getMessage());
     }
 
     @Test
@@ -38,6 +40,7 @@ class UsuarioServiceTest extends TestContainerBase {
         var usuario = EntityTestFactory.getUsuario();
         var actual = service.save(usuario);
         assertNotNull(actual.getId());
+        actual = service.findById(actual.getId());
         assertEquals(usuario.getNome(), actual.getNome());
         assertEquals(usuario.getSaldo(), actual.getSaldo());
     }
@@ -52,13 +55,16 @@ class UsuarioServiceTest extends TestContainerBase {
                 .saldo(BigDecimal.ZERO)
                 .build();
 
-        assertThrows(Exception.class, () -> service.save(usuario2));
+        var ex = assertThrows(ServiceException.class, () -> service.save(usuario2));
+
+        assertEquals(getFormattedMessage(MessageConstants.ERRO_USUARIO_NOME_JA_CADASTRADO, usuario2.getNome()), ex.getMessage());
     }
 
     @Test
     void testUsuarioSalvoComSaldoNegativo() {
         var usuario = EntityTestFactory.getUsuario();
         usuario.setSaldo(BigDecimal.valueOf(-1));
-        assertThrows(Exception.class, () -> service.save(usuario));
+        var ex = assertThrows(ConstraintViolationException.class, () -> service.save(usuario));
+        assertEquals("deve ser maior ou igual a 0", ex.getConstraintViolations().iterator().next().getMessage());
     }
 }
