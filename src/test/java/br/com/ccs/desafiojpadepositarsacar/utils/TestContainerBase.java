@@ -10,7 +10,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @ActiveProfiles("test")
 public abstract class TestContainerBase {
 
-    public static final PostgreSQLContainer<PostgreTestContainer> container = PostgreTestContainer.getInstance();
+    public static final PostgreSQLContainer<PostgresTestContainer> container = PostgresTestContainer.getInstance();
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
