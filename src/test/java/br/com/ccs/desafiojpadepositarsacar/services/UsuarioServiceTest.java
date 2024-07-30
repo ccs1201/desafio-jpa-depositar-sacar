@@ -5,20 +5,17 @@ import br.com.ccs.desafiojpadepositarsacar.entities.Usuario;
 import br.com.ccs.desafiojpadepositarsacar.exceptions.ServiceException;
 import br.com.ccs.desafiojpadepositarsacar.factories.EntityTestFactory;
 import br.com.ccs.desafiojpadepositarsacar.repostitories.UsuarioRepository;
+import br.com.ccs.desafiojpadepositarsacar.utils.TestContainerBase;
 import br.com.ccs.desafiojpadepositarsacar.utils.TranslationUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@TestPropertySource("/application-test.properties")
-class UsuarioServiceTest {
+class UsuarioServiceTest extends TestContainerBase {
 
     @Autowired
     private UsuarioService service;

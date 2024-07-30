@@ -4,19 +4,17 @@ import br.com.ccs.desafiojpadepositarsacar.entities.UsuarioVersion;
 import br.com.ccs.desafiojpadepositarsacar.factories.EntityTestFactory;
 import br.com.ccs.desafiojpadepositarsacar.repostitories.UsuarioVersionRepository;
 import br.com.ccs.desafiojpadepositarsacar.services.UsuarioVersionService;
+import br.com.ccs.desafiojpadepositarsacar.utils.TestContainerBase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-//@ActiveProfiles("test")
-class DepositoComponentDepositoOtimistaTest {
+class DepositoComponentDepositoOtimistaTest extends TestContainerBase {
 
     @Autowired
     private DepositoComponent depositoComponent;
@@ -25,6 +23,7 @@ class DepositoComponentDepositoOtimistaTest {
     @Autowired
     private UsuarioVersionRepository repository;
     private UsuarioVersion usuario;
+
 
     @BeforeEach
     void setUp() {

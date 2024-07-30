@@ -8,6 +8,7 @@ import br.com.ccs.desafiojpadepositarsacar.repostitories.UsuarioRepository;
 import br.com.ccs.desafiojpadepositarsacar.repostitories.UsuarioVersionRepository;
 import br.com.ccs.desafiojpadepositarsacar.services.UsuarioService;
 import br.com.ccs.desafiojpadepositarsacar.services.UsuarioVersionService;
+import br.com.ccs.desafiojpadepositarsacar.utils.TestContainerBase;
 import br.com.ccs.desafiojpadepositarsacar.utils.RunnableFutureTestHelper;
 import org.flywaydb.core.internal.util.ExceptionUtils;
 import org.hibernate.StaleObjectStateException;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,9 +23,8 @@ import java.util.concurrent.CompletionException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-//@ActiveProfiles("test")
-class SaqueConcorrenteTest {
+
+class SaqueConcorrenteTest extends TestContainerBase {
 
     @Autowired
     private SaqueComponent saqueComponent;
@@ -88,7 +87,7 @@ class SaqueConcorrenteTest {
         usuarioVersion = usuarioVersionService.save(usuarioVersion);
         var ex = assertThrows(CompletionException.class, () -> {
             for (int i = 0; i < 101; i++) {
-                sacarOtimista(i,BigDecimal.TEN);
+                sacarOtimista(i, BigDecimal.TEN);
             }
         });
 

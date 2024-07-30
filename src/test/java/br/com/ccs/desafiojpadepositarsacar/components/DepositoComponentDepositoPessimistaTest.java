@@ -4,19 +4,17 @@ import br.com.ccs.desafiojpadepositarsacar.entities.Usuario;
 import br.com.ccs.desafiojpadepositarsacar.factories.EntityTestFactory;
 import br.com.ccs.desafiojpadepositarsacar.repostitories.UsuarioRepository;
 import br.com.ccs.desafiojpadepositarsacar.services.UsuarioService;
+import br.com.ccs.desafiojpadepositarsacar.utils.TestContainerBase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-//@ActiveProfiles("test")
-class DepositoComponentDepositoPessimistaTest {
+class DepositoComponentDepositoPessimistaTest extends TestContainerBase {
 
     @Autowired
     private DepositoComponent depositoComponent;
@@ -38,6 +36,7 @@ class DepositoComponentDepositoPessimistaTest {
         depositoComponent.depositarPessimista(usuario, new BigDecimal(100));
         assertEquals(new BigDecimal(1100).setScale(2, RoundingMode.HALF_UP), usuarioService.findById(usuario.getId()).getSaldo());
     }
+
     @Test
     void testDepositarPessimistaVariosDepositos() {
         usuarioService.save(usuario);
